@@ -1,0 +1,51 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+.clearfix:after {
+ content: " ";
+ display: block;
+ clear: both;
+ height: 0;
+}
+.clearfix {zoom: 1;}
+
+.main-content{
+  position: relative;
+  height: 500px;
+}
+.main-content .tree{
+  float: left;
+  height: 100%;
+  width: 200px;
+  background-color: rgb(197,213,202);
+}
+.main-content .drag-line{
+  position: absolute;
+  top: 0;
+  left: 200px;
+  height: 100%;
+  width: 10px;
+  background-color: red;
+}
+.main-content .preview{
+  height: 100%;
+  overflow: hidden;
+  background-color: rgb(159,168,163);
+}
+
+.main .drag-line2{
+  position: absolute;
+  top: 500px;
+  width: 100%;
+  height: 10px;
+  background-color: red;
+}
+.main .edit{
+  width: 100%;
+  height: 300px;
+  background-color: rgb(227, 224, 207);
+}
+.hover:hover{
+  cursor: move;
+}
