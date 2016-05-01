@@ -4,13 +4,13 @@ $(function(){
     prev: $('.tree'),
     next: $('.preview'),
     dragLine: $('.drag-line'),
-    direction: 'x'
+    direction: 'x'//某人y轴方向拖动
   });
 
-  /*$.splitHandle({
+  $.splitHandle({
     wrap: $('.main'),
     prev: $('.main-content'),
     next: $('.edit'),
     dragLine: $('.drag-line2')
-  });*/
+  });
 });

@@ -12,12 +12,14 @@
         factory(jQuery);
     }
 }(function($, undefined){
-  var DRAGGING = false;
-  var WRAP_H   = null;
-  var WRAP_W   = null;
 
-  //根据拖动的方向做相应计算
-  var resize = {
+  var DRAGGING       = false;
+  var CACHE_OPTION_X = null;
+  var CACHE_OPTION_Y = null;
+  var WRAP_H         = null;
+  var WRAP_W         = null;
+
+  var action = {
     /**
      * @function x
      * @description 延x轴方向拖动
@@ -70,6 +72,32 @@
         option.prev.height(option.dragLine.offset().top - offsetTop +15);
         option.decond.height(0);
       }
+    },
+
+    /**
+     * @function offMouse
+     * @description 解绑非当前wrap的mouse事件
+     * @param {direction}
+     */
+    offMouse: function(direction){
+      if(WRAP_H && WRAP_W && direction=='x'){
+        CACHE_OPTION_Y.wrap.off();
+      } else {
+        CACHE_OPTION_X.wrap.off();
+      }
+    },
+
+    /**
+     * @function onMouse
+     * @description 重新绑定mouse事件
+     * @param {direction}
+     */
+    onMouse: function(direction){
+      if(WRAP_H && WRAP_W && direction=='x'){
+        listener(CACHE_OPTION_Y);
+      } else {
+        listener(CACHE_OPTION_X);
+      }
     }
   };
 
@@ -78,21 +106,23 @@
    * @description 鼠标相关事件监听
    * @param {option} 外部传参
    */
-  var mouse = function(option){
-    option.wrap.off('mousedown').on('mousedown',function(e){
+  var listener = function(option){
+    option.dragLine.off('mousedown').on('mousedown',function(e){
       DRAGGING = true;
+      action.offMouse(option.direction);
       if(option.debug) console.log('mousedown',DRAGGING);
       if(option.debug) console.log('=====================');
-    })
-    .off('mousemove').on('mousemove', function(e) {
+    });
+    option.wrap.off('mousemove').on('mousemove', function(e) {
       e.preventDefault();
       if (!DRAGGING) return;
-      resize[option.direction](e,option);
+      action[option.direction](e,option);
       if(option.debug) console.log('---------------------');
       if(option.debug) console.log('mousemove',DRAGGING);
     })
     .off('mouseup').on('mouseup',function(e){
       DRAGGING = false;
+      action.onMouse(option.direction);
       if(option.debug) console.log('=====================');
       if(option.debug) console.log('mouseup',DRAGGING);
     });
@@ -112,9 +142,15 @@
       dragLine: null,
       direction: 'y',//默认上下
     }, _option);
-    WRAP_W = option.direction=='x' ? option.wrap.width() : null;
-    WRAP_H = option.direction=='y' ? option.wrap.height() : null;
-    mouse(option);
+
+    if (option.direction=='x') {
+      CACHE_OPTION_X = option;
+      WRAP_W = option.wrap.width();
+    } else {
+      CACHE_OPTION_Y = option;
+      WRAP_H = option.wrap.height();
+    }
+    listener(option);
   };
 
   return {splitHandle: $.splitHandle};
