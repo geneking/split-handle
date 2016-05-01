@@ -1,5 +1,5 @@
 ## split-handle
-----
+
 ### 1.怎么调用
 依赖于jquery
 ```javascript
@@ -21,6 +21,7 @@ $.splitHandle({
 require调用，也是直接调用splitHandle方法
 
 ###2.参数
+> *  debug:默认false，关闭debug模式
 > *  wrap:包含两个div及拖动条的父级容器
 > *  prev:拖动条前面（左边）的jquery对象
 > *  next:拖动条后面（右边）的jquery对象
