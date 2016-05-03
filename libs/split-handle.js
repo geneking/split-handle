@@ -136,13 +136,13 @@
   $.splitHandle = function(_option){
     var option = $.extend({
       debug: false,
-      wrap: $('body'),
-      prev: null,
-      next: null,
       dragLine: null,
       direction: 'y',//默认上下
     }, _option);
 
+    option.wrap = option.dragLine.parent();
+    option.prev = option.dragLine.prev();
+    option.next = option.dragLine.next();
     if (option.direction=='x') {
       CACHE_OPTION_X = option;
       WRAP_W = option.wrap.width();
