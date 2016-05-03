@@ -7,10 +7,6 @@ $.splitHandle({
   dragLine: $('.drag-line'),
   direction: 'x'//某人y轴方向拖动
 });
-
-$.splitHandle({
-  dragLine: $('.drag-line2')
-});
 ```
 require调用，也是直接调用splitHandle方法
 
